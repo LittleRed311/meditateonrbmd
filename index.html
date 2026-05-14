@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
   <title>Relax — Guided Breathing Meditation</title>
-  <meta name="description" content="A calming one-minute guided breathing meditation with soothing visuals and ambient music." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="A calming one-minute guided breathing meditation with soothing visuals and ambient music for Meta Ray-Ban Display glasses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Ambient particle canvas -->
-  <canvas id="particle-canvas"></canvas>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
   <!-- ─── Landing Screen ─── -->
-  <section id="screen-landing" class="screen active">
+  <section id="screen-landing" class="screen active" role="main">
     <div class="landing-content">
-      <div class="logo-mark">
+      <div class="logo-mark" aria-hidden="true">
         <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="30" cy="30" r="28" stroke="url(#logoGrad)" stroke-width="2" opacity="0.6"/>
           <circle cx="30" cy="30" r="18" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.4"/>
@@ -31,10 +31,10 @@
         </svg>
       </div>
       <h1 class="app-title">Relax</h1>
-      <p class="app-subtitle">A one-minute guided breathing meditation</p>
+      <p class="app-subtitle">One-minute guided breathing</p>
       <p class="app-detail">5 deep breaths · ambient soundscape</p>
-      <button id="btn-start" class="btn-primary" aria-label="Start Meditation">
-        <span class="btn-icon">
+      <button id="btn-start" class="btn-primary focusable" aria-label="Start Meditation" autofocus>
+        <span class="btn-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
         </span>
         Start Meditation
@@ -43,16 +43,16 @@
   </section>
 
   <!-- ─── Meditation Screen ─── -->
-  <section id="screen-meditation" class="screen">
+  <section id="screen-meditation" class="screen" role="main" aria-live="polite">
     <div class="meditation-container">
       <!-- Breath counter -->
       <div id="breath-counter" class="breath-counter">Breath 1 of 5</div>
 
       <!-- Timer -->
-      <div id="timer" class="timer">1:00</div>
+      <div id="timer" class="timer" aria-label="Time remaining">1:00</div>
 
       <!-- Breathing circle -->
-      <div class="circle-wrapper">
+      <div class="circle-wrapper" aria-hidden="true">
         <div id="circle-glow" class="circle-glow"></div>
         <div id="circle-outer" class="circle-outer">
           <div id="circle-inner" class="circle-inner"></div>
@@ -60,19 +60,19 @@
       </div>
 
       <!-- Breathing text -->
-      <p id="breath-text" class="breath-text">Breathe In</p>
+      <p id="breath-text" class="breath-text" aria-live="assertive">Breathe In</p>
 
       <!-- Progress bar -->
-      <div class="progress-track">
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div id="progress-bar" class="progress-bar"></div>
       </div>
     </div>
   </section>
 
   <!-- ─── Completion Screen ─── -->
-  <section id="screen-complete" class="screen">
+  <section id="screen-complete" class="screen" role="main">
     <div class="complete-content">
-      <div class="complete-icon">
+      <div class="complete-icon" aria-hidden="true">
         <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="40" cy="40" r="36" stroke="url(#checkGrad)" stroke-width="2.5" opacity="0.7"/>
           <path d="M24 40 L35 51 L56 30" stroke="url(#checkGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -85,8 +85,8 @@
         </svg>
       </div>
       <h2 class="complete-title">Session Complete</h2>
-      <p class="complete-message">You completed 5 deep breaths.<br/>Take this calm with you.</p>
-      <button id="btn-restart" class="btn-primary" aria-label="Meditate Again">Meditate Again</button>
+      <p class="complete-message">You completed 5 deep breaths.<br>Take this calm with you.</p>
+      <button id="btn-restart" class="btn-primary focusable" aria-label="Meditate Again">Meditate Again</button>
     </div>
   </section>
 
