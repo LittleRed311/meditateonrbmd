@@ -1,0 +1,360 @@
+/* ─────────────────────────────────────────────
+   Relax — Guided Breathing Meditation
+   Design System & Styles
+   ───────────────────────────────────────────── */
+
+/* ── Design Tokens ── */
+:root {
+  /* Palette */
+  --bg-deep:        #080c18;
+  --bg-surface:     rgba(15, 22, 45, 0.85);
+  --blue-primary:   #4A90D9;
+  --blue-light:     #6EC1E4;
+  --blue-glow:      rgba(78, 152, 230, 0.35);
+  --blue-soft:      rgba(110, 193, 228, 0.12);
+  --teal-accent:    #48D1A0;
+  --text-primary:   rgba(220, 235, 255, 0.95);
+  --text-secondary: rgba(180, 200, 230, 0.6);
+  --text-muted:     rgba(140, 165, 200, 0.4);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+
+  /* Transitions */
+  --ease-out-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Circle sizes */
+  --circle-min: 100px;
+  --circle-max: 220px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Particle Canvas ── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Screens ── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s var(--ease-in-out), visibility 0.8s;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── Landing Screen ── */
+.landing-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  animation: fadeUp 1s var(--ease-out-soft) both;
+}
+
+.logo-mark svg {
+  width: 64px;
+  height: 64px;
+  animation: gentle-spin 20s linear infinite;
+}
+
+@keyframes gentle-spin {
+  to { transform: rotate(360deg); }
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 5rem);
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--blue-light), var(--blue-primary), var(--teal-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.app-subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.app-detail {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Primary Button ── */
+.btn-primary {
+  margin-top: var(--space-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(74, 144, 217, 0.25), rgba(72, 209, 160, 0.15));
+  border: 1px solid rgba(110, 193, 228, 0.25);
+  border-radius: 60px;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.35s var(--ease-out-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 120%, rgba(110, 193, 228, 0.15), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(110, 193, 228, 0.45);
+  box-shadow: 0 8px 32px rgba(74, 144, 217, 0.2), 0 0 60px rgba(110, 193, 228, 0.08);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Meditation Screen ── */
+.meditation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  animation: fadeUp 0.6s var(--ease-out-soft) both;
+}
+
+.breath-counter {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.timer {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+/* ── Breathing Circle ── */
+.circle-wrapper {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-glow {
+  position: absolute;
+  width: var(--circle-min);
+  height: var(--circle-min);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+  filter: blur(30px);
+  transition: width 0.3s, height 0.3s;
+}
+
+.circle-outer {
+  position: relative;
+  width: var(--circle-min);
+  height: var(--circle-min);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(74, 144, 217, 0.12), rgba(110, 193, 228, 0.06));
+  border: 1.5px solid rgba(110, 193, 228, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  /* Will be animated by JS */
+}
+
+.circle-inner {
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%,
+    rgba(110, 193, 228, 0.5),
+    rgba(74, 144, 217, 0.35) 50%,
+    rgba(58, 123, 213, 0.2) 100%
+  );
+  box-shadow: 0 0 40px rgba(110, 193, 228, 0.15), inset 0 0 20px rgba(110, 193, 228, 0.1);
+}
+
+/* ── Breath Text ── */
+.breath-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  text-align: center;
+  min-height: 3rem;
+  transition: opacity 0.5s var(--ease-in-out);
+}
+
+.breath-text.fade {
+  opacity: 0;
+}
+
+/* ── Progress Bar ── */
+.progress-track {
+  width: min(280px, 70vw);
+  height: 3px;
+  background: rgba(110, 193, 228, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: var(--space-sm);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-light), var(--teal-accent));
+  border-radius: 3px;
+  transition: width 0.5s linear;
+}
+
+/* ── Completion Screen ── */
+.complete-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  animation: fadeUp 0.8s var(--ease-out-soft) both;
+}
+
+.complete-icon svg {
+  width: 80px;
+  height: 80px;
+  animation: scaleIn 0.6s var(--ease-out-soft) both;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.complete-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--blue-light), var(--teal-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.complete-message {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ── Utility Animations ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  :root {
+    --circle-min: 80px;
+    --circle-max: 170px;
+  }
+
+  .circle-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .progress-track {
+    width: 60vw;
+  }
+}
